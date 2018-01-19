@@ -31,5 +31,4 @@
 /server/yarn-debug.log*
 /server/yarn-error.log*
 
-/app/.idea
-/server/.idea
+.idea
