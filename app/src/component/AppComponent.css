@@ -1,0 +1,15 @@
+.app__button {
+    padding: 20px 10px;
+    background-color: lightsteelblue;
+    color: black;
+    border: none;
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.app__button:focus {
+    outline: none;
+}

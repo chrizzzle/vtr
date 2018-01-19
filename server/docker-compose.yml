@@ -1,0 +1,18 @@
+version: '3'
+services:
+    voting-dashboard-server:
+      build:
+        context: .
+        dockerfile: docker/local/Dockerfile
+      ports:
+        - "8000:3000"
+        - "8080:8080"
+      links:
+        - mongodb
+      volumes:
+        - .:/var/www/html
+    mongodb:
+      image: mongo:latest
+      ports:
+        - 27017:27017
+      command: mongod --smallfiles

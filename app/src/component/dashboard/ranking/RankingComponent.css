@@ -1,0 +1,21 @@
+.ranking {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex: 1;
+}
+.ranking li {
+    display: flex;
+    flex: 1;
+    padding: 10px;
+    background-color: steelblue;
+    color: white;
+    margin-top: 2px;
+    align-items: center;
+}
+
+.ranking__number {
+    font-weight: bold;
+}

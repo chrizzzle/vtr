@@ -1,0 +1,19 @@
+.dashboard {
+    padding: 20px;
+}
+
+.dashboard canvas {
+    width: 100%;
+}
+
+
+.dashboard .row {
+    display: flex;
+    align-items: stretch;
+}
+
+.dashboard__component {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+}

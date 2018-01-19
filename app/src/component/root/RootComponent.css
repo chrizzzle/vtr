@@ -1,0 +1,13 @@
+.root__button {
+    width: 100%;
+    padding: 10px;
+    font-size: 50px;
+    font-weight: bold;
+    background-color: lightsteelblue;
+    border: none;
+    color: #333;
+    cursor: pointer;
+}
+.root__button:focus {
+    outline: none;
+}
