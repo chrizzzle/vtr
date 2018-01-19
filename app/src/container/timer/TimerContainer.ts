@@ -6,11 +6,12 @@ import {getTimeString} from './TimerHelper';
 
 export const mapStateToProps = (state: AppState, props) => {
     const session: Session = props.session;
-    const timer: number = session.timer || 0;
-    const display: string = getTimeString(timer);
+    const timerDisplay: string = getTimeString(session.timer || 0);
+    const percent: number = session.percent;
 
     return {
-        timer: display
+        timer: timerDisplay,
+        percent
     };
 };
 

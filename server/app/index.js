@@ -7,36 +7,43 @@ router.get('/session-create', function (req, res, next) {
     db.insertMany('sessions', [{
         name : 'Session ' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5),
         timer: 0,
+        percent: 0,
         countdown: null,
         active: false
     }, {
         name : 'Session ' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5),
         timer: 0,
+        percent: 0,
         countdown: null,
         active: false
     }, {
         name : 'Session ' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5),
         timer: 0,
+        percent: 0,
         countdown: null,
         active: false
     },{
         name : 'Session ' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5),
         timer: 0,
+        percent: 0,
         countdown: null,
         active: false
     }, {
         name : 'Session ' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5),
         timer: 0,
+        percent: 0,
         countdown: null,
         active: false
     }, {
         name : 'Session ' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5),
         timer: 0,
+        percent: 0,
         countdown: null,
         active: false
     }, {
         name : 'Session ' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5),
         timer: 0,
+        percent: 0,
         countdown: null,
         active: false
     }], function (err) {

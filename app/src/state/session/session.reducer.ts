@@ -62,7 +62,8 @@ export const sessions = (state: SessionState = null, action) => {
                     if (session._id === action.payload._id) {
                         return {
                             ...session,
-                            timer: action.payload.timer
+                            timer: action.payload.timer,
+                            percent: action.payload.percent
                         };
                     }
 

@@ -38,6 +38,7 @@ var startCountdownInterval = function (io, sessionParsed, callback) {
 var startTimerInterval = function (io, sessionParsed, callback) {
     var timerNumber = 0;
     sessionParsed.timer = timerNumber;
+    sessionParsed.percent = parseInt((timerNumber/config.timerMax)*100, 10);
     io.emit('SESSION_TIMER', {
         session: sessionParsed
     });
@@ -53,6 +54,7 @@ var startTimerInterval = function (io, sessionParsed, callback) {
             return;
         }
         sessionParsed.timer = timerNumber;
+        sessionParsed.percent = parseInt((timerNumber/config.timerMax)*100, 10);
         io.emit('SESSION_TIMER', {
             session: sessionParsed
         });

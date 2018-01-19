@@ -4,4 +4,5 @@ export interface Session {
     timer: number;
     countdown: number;
     active: boolean;
+    percent: number;
 }
