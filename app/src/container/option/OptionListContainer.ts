@@ -12,12 +12,14 @@ export const mapStateToProps = (state: AppState, props) => {
     const session = getSessionById(state.sessions.data, sessionId);
     const options = getOptionsBySession(state.options.data, session);
     const votes = getVotesBySession(state.votes.data, session);
+    const active = session.active;
 
     return {
         optionList: options,
         votes: votes,
         session: session,
-        error: state.votes.error
+        error: state.votes.error,
+        active: active
     };
 };
 

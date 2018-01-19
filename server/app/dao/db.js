@@ -13,9 +13,8 @@ var db = {
             collection.find({}).toArray(function (err, docs) {
                 assert.equal(err, null);
                 callback(null, docs);
+                client.close();
             });
-
-            client.close();
         });
     },
     insertMany: function (collectionName, entities, callback) {
@@ -27,12 +26,13 @@ var db = {
             collection.insertMany(entities,
                 function(err, result) {
                     assert.equal(err, null);
+                    client.close();
                     if (callback) {
                         callback(null);
                     }
             });
 
-            client.close();
+
         });
     },
     deleteAll: function (collectionName, callback) {
@@ -42,12 +42,11 @@ var db = {
             var collection = db.collection(collectionName);
 
             collection.deleteMany({}, function(err, result) {
+                client.close();
                 if (callback) {
                     callback(null);
                 }
             });
-
-            client.close();
         });
     },
     insertVote: function (vote, callback) {
@@ -59,10 +58,54 @@ var db = {
             voteCollection.insertOne(
                 vote,
                 {},
-                callback
+                function () {
+                    client.close();
+                    callback();
+                }
             );
+        });
+    },
 
-            client.close();
+    getById: function (collection, id, callback) {
+        MongoClient.connect(config.db.url, function (err, client) {
+            assert.equal(err, null);
+            var db = client.db(config.db.name);
+            var sessionCollection = db.collection(collection);
+
+            sessionCollection.findOne({
+                _id: id
+            }).toArray(function (err, doc) {
+                assert.equal(err, null);
+                callback(null, doc);
+                client.close();
+            });
+        });
+    },
+
+    updateSession: function (session, callback) {
+        MongoClient.connect(config.db.url, function (err, client) {
+            assert.equal(err, null);
+            var db = client.db(config.db.name);
+            var sessionCollection = db.collection('session');
+
+            sessionCollection.updateOne({
+                    _id: session._id
+                }, {
+                    '$set': {
+                        name: session.name,
+                        active: session.active,
+                        timer: session.timer,
+                        countdown: session.countdown
+                    }
+                },
+                function () {
+                    client.close();
+
+                    if (callback) {
+                        callback();
+                    }
+                }
+            );
         });
     },
     getVotesBySessionAndUser: function (sessionId, userId, callback) {
@@ -76,10 +119,9 @@ var db = {
                 userId: userId
             }).toArray(function (err, docs) {
                 assert.equal(err, null);
+                client.close();
                 callback(null, docs);
             });
-
-            client.close();
         });
     }
 };

@@ -7,6 +7,7 @@ import {getVoteCountByOption} from '../../container/dashboard/DashboardHelper';
 import {Session} from '../../entity/Session';
 import {Link} from 'react-router-dom';
 import {CountdownContainer} from '../../container/countdown/CountdownContainer';
+import {TimerContainer} from '../../container/timer/TimerContainer';
 
 interface OptionListComponentProps {
     optionList: Option[];
@@ -15,6 +16,7 @@ interface OptionListComponentProps {
     session: Session;
     error: string;
     startSession: (session: Session) => void;
+    active: boolean;
 }
 
 export class OptionListComponent extends React.Component<OptionListComponentProps, any> {
@@ -23,12 +25,14 @@ export class OptionListComponent extends React.Component<OptionListComponentProp
     }
 
     render() {
-        const {optionList, votes, session, error} = this.props;
+        const {optionList, votes, session, error, active} = this.props;
+        const activeClass = active ? 'option-list--active' : '';
 
-        return <div className="component option-list">
+        return <div className={`component option-list ${activeClass}`}>
             <CountdownContainer session={session} />
             <h2>{session.name}</h2>
 
+            <TimerContainer session={session} />
             {Boolean(error) && <div className="alert alert-danger" role="alert">{error}</div>}
 
             { optionList.map((option: Option) =>

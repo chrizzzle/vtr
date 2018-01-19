@@ -5,15 +5,51 @@ var assert = require('assert');
 
 router.get('/session-create', function (req, res, next) {
     db.insertMany('sessions', [{
-        name : 'Session ' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)
+        name : 'Session ' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5),
+        timer: 0,
+        countdown: null,
+        active: false
+    }, {
+        name : 'Session ' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5),
+        timer: 0,
+        countdown: null,
+        active: false
+    }, {
+        name : 'Session ' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5),
+        timer: 0,
+        countdown: null,
+        active: false
+    },{
+        name : 'Session ' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5),
+        timer: 0,
+        countdown: null,
+        active: false
+    }, {
+        name : 'Session ' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5),
+        timer: 0,
+        countdown: null,
+        active: false
+    }, {
+        name : 'Session ' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5),
+        timer: 0,
+        countdown: null,
+        active: false
+    }, {
+        name : 'Session ' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5),
+        timer: 0,
+        countdown: null,
+        active: false
     }], function (err) {
         assert.equal(err, null);
+
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify({
             success: true
         }));
 
-        db.findAll('sessions', function (err, docs) {
+        db.findAll('sessions', function (err2, docs) {
+            assert.equal(err2, null);
+
             docs.forEach(function (session) {
                 db.insertMany('options', [{
                     name: 'Option ' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5),
@@ -27,9 +63,8 @@ router.get('/session-create', function (req, res, next) {
                     name: 'Option ' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5),
                     sessionId: session._id,
                     votes: 0
-                }], function (err2) {
-                    assert.equal(err2, null);
-
+                }], function (err3) {
+                    assert.equal(err3, null);
                 });
             });
         });
@@ -55,10 +90,16 @@ router.get('/session', function (req, res, next) {
 router.get('/session-delete', function (req, res, next) {
     db.deleteAll('sessions', function (err) {
         assert.equal(err, null);
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify({
-            success: true
-        }));
+        db.deleteAll('options', function (err) {
+            assert.equal(err, null);
+            db.deleteAll('votes', function (err) {
+                assert.equal(err, null);
+                res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify({
+                    success: true
+                }));
+            });
+        });
     });
 });
 

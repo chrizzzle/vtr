@@ -33,9 +33,27 @@ export class DEVWsService implements WsService {
     }
 
     onCountdown(callback) {
-        this.ioClient.on('COUNT_DOWN', (response) => {
+        this.ioClient.on('SESSION_COUNT_DOWN', (response) => {
             console.log(response);
-            callback(parseInt(response.number), response.session);
+            callback(response.session);
+        });
+    }
+
+    onSessionStart(callback) {
+        this.ioClient.on('SESSION_START', (response) => {
+            callback(response.session);
+        });
+    }
+
+    onSessionEnd(callback) {
+        this.ioClient.on('SESSION_END', (response) => {
+            callback(response.session);
+        });
+    }
+
+    onSessionTimer(callback) {
+        this.ioClient.on('SESSION_TIMER', (response) => {
+            callback(response.session);
         });
     }
 }

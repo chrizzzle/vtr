@@ -1,6 +1,7 @@
 import {Option} from '../../entity/Option';
 import {ApiService} from './ApiService';
 import {Vote} from '../../entity/Vote';
+import {Session} from '../../entity/Session';
 
 export class DEVApiService implements ApiService {
     constructor(private apiBaseUrl: string) {}
@@ -25,7 +26,7 @@ export class DEVApiService implements ApiService {
         }).then(response => response.json());
     }
 
-    getSessions(): Promise<Option[]> {
+    getSessions(): Promise<Session[]> {
         return fetch(this.apiBaseUrl + '/session', {
             method: 'GET',
             headers: {

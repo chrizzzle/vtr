@@ -11,7 +11,7 @@ class Wrapper extends React.Component<WrapperProps, any> {
         if (this.props.loading) {
             return (<LoadingSpinnerComponent />)
         }
-        return (<div>
+        return (<div className="wrapper">
                 <ConnectedContainer />
                 <div className="container">
                     {this.props.children}

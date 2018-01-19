@@ -1,9 +1,7 @@
 import {Session} from '../../entity/Session';
 
 export const UI_ACTIONS = {
-    UI_SWITCH_VIEW: 'UI_SWITCH_VIEW',
-    UI_SET_LOADING: 'UI_SET_LOADING',
-    UI_COUNT_DOWN: 'UI_COUNT_DOWN'
+    UI_SET_LOADING: 'UI_SET_LOADING'
 };
 
 export const uiSetLoading = (loading: boolean) => {

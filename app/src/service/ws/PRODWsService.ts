@@ -37,4 +37,22 @@ export class PRODWsService implements WsService {
             callback(parseInt(number), session);
         });
     }
+
+    onSessionStart(callback) {
+        this.ioClient.on('SESSION_START', (response) => {
+            callback(response.session);
+        });
+    }
+
+    onSessionEnd(callback) {
+        this.ioClient.on('SESSION_END', (response) => {
+            callback(response.session);
+        });
+    }
+
+    onSessionTimer(callback) {
+        this.ioClient.on('SESSION_TIMER', (response) => {
+            callback(response.session);
+        });
+    }
 }

@@ -2,8 +2,8 @@ import {AppFactory} from '../factory/AppFactory';
 import {wsSetConnected, wsSetLoading} from '../state/ws/ws.actions';
 import {voteResponseError, voteResponseSuccess} from '../state/vote/vote.actions';
 import {Vote} from '../entity/Vote';
-import {uiCountDown} from '../state/ui/ui.actions';
 import {Session} from '../entity/Session';
+import {sessionCountdown, sessionEnd, sessionStart, sessionTimer} from '../state/session/session.actions';
 
 export const connectWs = () => {
     return (dispatch, getState, factory: AppFactory) => {
@@ -17,17 +17,11 @@ export const connectWs = () => {
                 dispatch(wsSetConnected(false));
             });
 
-        wsService.onVote((vote: Vote) => {
-            dispatch(voteResponseSuccess(vote));
-        });
-
-        wsService.onVoteLimit(() => {
-            dispatch(voteResponseError('Vote limit reached'));
-        });
-
-        wsService.onCountdown((number: number, session: Session) => {
-            console.log(number, session);
-            dispatch(uiCountDown(number, session));
-        });
+        wsService.onVote((vote: Vote) => dispatch(voteResponseSuccess(vote)));
+        wsService.onVoteLimit(() => dispatch(voteResponseError('Vote limit reached')));
+        wsService.onCountdown((session: Session) => dispatch(sessionCountdown(session)));
+        wsService.onSessionStart((session: Session) => dispatch(sessionStart(session)));
+        wsService.onSessionEnd((session: Session) => dispatch(sessionEnd(session)));
+        wsService.onSessionTimer((session: Session) => dispatch(sessionTimer(session)));
     };
 };
