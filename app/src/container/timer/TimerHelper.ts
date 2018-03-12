@@ -5,8 +5,6 @@ export const getTimeString = (seconds: number): string => {
     return `${minutesDisplay}:${secondsDisplay}`;
 };
 
-const leftPad = (number: number): string => {
-    return number < 10 ? `0${number}` : `${number}`;
+const leftPad = (time: number): string => {
+    return time < 10 ? `0${time}` : `${time}`;
 };
-
-

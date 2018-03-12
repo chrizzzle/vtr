@@ -5,11 +5,11 @@ import {Session} from '../../entity/Session';
 
 export const mapStateToProps = (state: AppState, props) => {
     const session: Session = props.session;
-    const number: number = session.countdown || 0;
+    const count: number = session.countdown || 0;
     const show: boolean = session.countdown > 0;
 
     return {
-        number,
+        count,
         show
     };
 };

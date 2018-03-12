@@ -7,21 +7,20 @@ interface TimerComponentProps {
     percent: number;
 }
 
-export class TimerComponent extends React.Component<TimerComponentProps, any> {
+export class TimerComponent extends React.Component<TimerComponentProps, {}> {
     render() {
         const {timer, percent} = this.props;
 
-        return <div className="timer">
-            <div className="timer__value">
-                <CircularProgressbar
-                    percentage={percent}
-                    textForPercentage={null}
-                />
-            </div>
+        return (
+            <div className="timer">
+                <div className="timer__value">
+                    <CircularProgressbar percentage={percent} textForPercentage={null} />
+                </div>
 
-            <div className="timer__time">
-                {timer}
+                <div className="timer__time">
+                    {timer}
+                </div>
             </div>
-        </div>;
+        );
     }
 }

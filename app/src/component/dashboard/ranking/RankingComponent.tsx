@@ -1,22 +1,24 @@
 import * as React from 'react';
 import {Option} from '../../../entity/Option';
-import './RankingComponent.css'
+import './RankingComponent.css';
 
 interface RankingComponentProps {
     options: Option[];
 }
 
-export class RankingComponent extends React.Component<RankingComponentProps, any> {
+export class RankingComponent extends React.Component<RankingComponentProps, {}> {
     render() {
         const {options} = this.props;
 
-        return <ul className="ranking">
+        return (
+            <ul className="ranking">
                 {options.map((option: Option, index: number) =>
                     <li key={option._id}>
-                        <span className="ranking__number">{index+1}.</span>&nbsp;
+                        <span className="ranking__number">{index + 1}.</span>&nbsp;
                         {option.name}
                     </li>
                 )}
             </ul>
+        );
     }
 }

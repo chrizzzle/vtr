@@ -18,7 +18,7 @@ interface DashboardComponentProps {
     voteCountByOption: number[];
 }
 
-class DashboardComponent extends React.Component<DashboardComponentProps, any> {
+class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
     render() {
         const {
             optionNames,
@@ -30,33 +30,35 @@ class DashboardComponent extends React.Component<DashboardComponentProps, any> {
             votes
         } = this.props;
 
-        return <div className="dashboard">
-            <h2>Session: {session.name}</h2>
-            <hr/>
-            <div className="row">
-                <div className="dashboard__component col-sm-6">
-                    <h2>Bar Chart</h2>
-                    <BarChartComponent data={voteCountByOption} labels={optionNames}/>
-                </div>
+        return (
+            <div className="dashboard">
+                <h2>Session: {session.name}</h2>
+                <hr/>
+                <div className="row">
+                    <div className="dashboard__component col-sm-6">
+                        <h2>Bar Chart</h2>
+                        <BarChartComponent data={voteCountByOption} labels={optionNames}/>
+                    </div>
 
-                <div className="dashboard__component col-sm-6">
-                    <h2>Ranking</h2>
-                    <RankingComponent options={optionsSorted}/>
+                    <div className="dashboard__component col-sm-6">
+                        <h2>Ranking</h2>
+                        <RankingComponent options={optionsSorted}/>
+                    </div>
+                </div>
+                <hr/>
+                <div className="row">
+                    <div className="dashboard__component col-sm-6">
+                        <h2>Pie Chart</h2>
+                        <PieChartComponent options={options} votes={votes} labels={optionNames}/>
+                    </div>
+
+                    <div className="dashboard__component col-sm-6">
+                        <h2>Vote Count</h2>
+                        <VoteCountComponent count={voteCount}/>
+                    </div>
                 </div>
             </div>
-            <hr/>
-            <div className="row">
-                <div className="dashboard__component col-sm-6">
-                    <h2>Pie Chart</h2>
-                    <PieChartComponent options={options} votes={votes} labels={optionNames}/>
-                </div>
-
-                <div className="dashboard__component col-sm-6">
-                    <h2>Vote Count</h2>
-                    <VoteCountComponent count={voteCount}/>
-                </div>
-            </div>
-        </div>;
+        );
     }
 }
 

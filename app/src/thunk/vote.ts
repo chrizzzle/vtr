@@ -14,5 +14,3 @@ export const vote = (option: Option) => {
             });
     };
 };
-
-

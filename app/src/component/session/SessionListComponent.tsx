@@ -8,15 +8,16 @@ interface SessionListComponentProps {
     onSessionClick: (session: Session) => void;
 }
 
-export class SessionListComponent extends React.Component<SessionListComponentProps, any> {
+export class SessionListComponent extends React.Component<SessionListComponentProps, {}> {
     render() {
         const {sessions, onSessionClick} = this.props;
 
-        return <div className="session-list">
-            <h2>Sessions</h2>
-            {sessions.map((session: Session) =>
-                <SessionComponent key={session._id} session={session} onSessionClick={onSessionClick} />
-            )}
-        </div>
+        return (
+            <div className="session-list">
+                {sessions.map((session: Session) =>
+                    <SessionComponent key={session._id} session={session} onSessionClick={onSessionClick} />
+                )}
+            </div>
+        );
     }
 }

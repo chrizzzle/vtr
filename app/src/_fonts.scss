@@ -1,0 +1,124 @@
+/* Helvetica Neue Light */
+@font-face {
+	font-family: "Helvetica Neue LT W06 45 Light";
+	src: url("resources/fonts/2b5cafe0-7a75-4a94-8c93-83a1045ab561.eot?#iefix");
+	src: url("resources/fonts/2b5cafe0-7a75-4a94-8c93-83a1045ab561.eot?#iefix") format("eot"),
+	url("resources/fonts/0ee5a0a2-d066-4165-9d6a-bc5ef03378d4.woff") format("woff"),
+	url("resources/fonts/61d037d3-89f4-41ba-bdbf-236fb71985fe.ttf") format("truetype"),
+	url("resources/fonts/986d248f-a13b-4ab2-b00a-1cba92708a5e.svg#986d248f-a13b-4ab2-b00a-1cba92708a5e")
+	format("svg");
+}
+/* Helvetica Neue Roman */
+@font-face {
+    font-family: "Helvetica Neue LT W06 55 Roman";
+    src: url("resources/fonts/e0f8f15a-c0f6-4ddb-a86e-d0b3dd600c25.eot?#iefix");
+    src: url("resources/fonts/e0f8f15a-c0f6-4ddb-a86e-d0b3dd600c25.eot?#iefix") format("eot"),
+    url("resources/fonts/990dea59-fcdd-461d-863d-3517e48e8ed0.woff") format("woff"),
+    url("resources/fonts/faf94d73-68f4-48a2-970f-f57530c211c9.ttf") format("truetype"),
+    url("resources/fonts/e4bb531b-d9fc-405e-88c3-1b34c22a8c50.svg#e4bb531b-d9fc-405e-88c3-1b34c22a8c50")
+    format("svg");
+}
+/* Helvetica Neue Bold */
+@font-face {
+    font-family:"Helvetica Neue LT W06 75 Bold";
+    src: url("resources/fonts/57deecaf-8d98-4879-a2c3-fd4e39763792.eot?#iefix");
+    src: url("resources/fonts/57deecaf-8d98-4879-a2c3-fd4e39763792.eot?#iefix") format("eot"),
+    url("resources/fonts/cb4a0bc9-8ebf-49d0-8141-f678590cdd7a.woff") format("woff"),
+    url("resources/fonts/dc5e824b-32f0-4eaf-96da-edc62194996b.ttf") format("truetype"),
+    url("resources/fonts/b171a7aa-9403-4e4c-aef3-f4ad65c836ba.svg#b171a7aa-9403-4e4c-aef3-f4ad65c836ba")
+    format("svg");
+}
+/*Thai Font*/
+@font-face {
+    font-family: "DB HelvethaicaMon";
+    src: url("resources/fonts/DBHelvethaicaMonX-55Regular.eot");
+    src: url("resources/fonts/DBHelvethaicaMonX-55Regular.eot?#iefix") format("embedded-opentype"),
+    url("resources/fonts/DBHelvethaicaMonX-55Regular.woff2") format("woff2"),
+    url("resources/fonts/DBHelvethaicaMonX-55Regular.woff") format("woff"),
+    url("resources/fonts/DBHelvethaicaMonX-55Regular.ttf") format("truetype"),
+    url("resources/fonts/DBHelvethaicaMonX-55Regular.svg#DBHelvethaicaMonX-55Regular") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "DB HelvethaicaMon";
+    src: url("resources/fonts/DBHelvethaicaMonX-56Italic.eot");
+    src: url("resources/fonts/DBHelvethaicaMonX-56Italic.eot?#iefix") format("embedded-opentype"),
+    url("resources/fonts/DBHelvethaicaMonX-56Italic.woff2") format("woff2"),
+    url("resources/fonts/DBHelvethaicaMonX-56Italic.woff") format("woff"),
+    url("resources/fonts/DBHelvethaicaMonX-56Italic.ttf") format("truetype"),
+    url("resources/fonts/DBHelvethaicaMonX-56Italic.svg#DBHelvethaicaMonX-56Italic") format("svg");
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "DB HelvethaicaMon";
+    src: url("resources/fonts/DBHelvethaicaMonX-75Bd.eot");
+    src: url("resources/fonts/DBHelvethaicaMonX-75Bd.eot?#iefix") format("embedded-opentype"),
+    url("resources/fonts/DBHelvethaicaMonX-75Bd.woff2") format("woff2"),
+    url("resources/fonts/DBHelvethaicaMonX-75Bd.woff") format("woff"),
+    url("resources/fonts/DBHelvethaicaMonX-75Bd.ttf") format("truetype"),
+    url("resources/fonts/DBHelvethaicaMonX-75Bd.svg#DBHelvethaicaMonX-75Bd") format("svg");
+    font-weight: bold;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: "DB HelvethaicaMon";
+    src: url("resources/fonts/DBHelvethaicaMonX-76BdIt.eot");
+    src: url("resources/fonts/DBHelvethaicaMonX-76BdIt.eot?#iefix") format("embedded-opentype"),
+    url("resources/fonts/DBHelvethaicaMonX-76BdIt.woff2") format("woff2"),
+    url("resources/fonts/DBHelvethaicaMonX-76BdIt.woff") format("woff"),
+    url("resources/fonts/DBHelvethaicaMonX-76BdIt.ttf") format("truetype"),
+    url("resources/fonts/DBHelvethaicaMonX-76BdIt.svg#DBHelvethaicaMonX-76BdIt") format("svg");
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Helvetica World";
+    src: url("resources/fonts/subset-HelveticaWorld-Regular.eot");
+    src: url("resources/fonts/subset-HelveticaWorld-Regular.eot?#iefix") format("embedded-opentype"),
+    url("resources/fonts/subset-HelveticaWorld-Regular.woff2") format("woff2"),
+    url("resources/fonts/subset-HelveticaWorld-Regular.woff") format("woff"),
+    url("resources/fonts/subset-HelveticaWorld-Regular.ttf") format("truetype"),
+    url("resources/fonts/subset-HelveticaWorld-Regular.svg#HelveticaWorld-Regular") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Helvetica World";
+    src: url("resources/fonts/subset-HelveticaWorld-Italic.eot");
+    src: url("resources/fonts/subset-HelveticaWorld-Italic.eot?#iefix") format("embedded-opentype"),
+    url("resources/fonts/subset-HelveticaWorld-Italic.woff2") format("woff2"),
+    url("resources/fonts/subset-HelveticaWorld-Italic.woff") format("woff"),
+    url("resources/fonts/subset-HelveticaWorld-Italic.ttf") format("truetype"),
+    url("resources/fonts/subset-HelveticaWorld-Italic.svg#HelveticaWorld-Italic") format("svg");
+    font-weight: normal;
+    font-style: italic;
+}
+@font-face {
+    font-family: "Helvetica World";
+    src: url("resources/fonts/subset-HelveticaWorld-Bold.eot");
+    src: url("resources/fonts/subset-HelveticaWorld-Bold.eot?#iefix") format("embedded-opentype"),
+    url("resources/fonts/subset-HelveticaWorld-Bold.woff2") format("woff2"),
+    url("resources/fonts/subset-HelveticaWorld-Bold.woff") format("woff"),
+    url("resources/fonts/subset-HelveticaWorld-Bold.ttf") format("truetype"),
+    url("resources/fonts/subset-HelveticaWorld-Bold.svg#HelveticaWorld-Bold") format("svg");
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Helvetica World";
+    src: url("resources/fonts/subset-HelveticaWorld-BoldItalic.eot");
+    src: url("resources/fonts/subset-HelveticaWorld-BoldItalic.eot?#iefix") format("embedded-opentype"),
+    url("resources/fonts/subset-HelveticaWorld-BoldItalic.woff2") format("woff2"),
+    url("resources/fonts/subset-HelveticaWorld-BoldItalic.woff") format("woff"),
+    url("resources/fonts/subset-HelveticaWorld-BoldItalic.ttf") format("truetype"),
+    url("resources/fonts/subset-HelveticaWorld-BoldItalic.svg#HelveticaWorld-BoldItalic") format("svg");
+    font-weight: bold;
+    font-style: italic;
+}

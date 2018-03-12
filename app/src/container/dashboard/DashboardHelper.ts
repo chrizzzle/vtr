@@ -24,9 +24,12 @@ export const getVoteCountByOptions = (options: Option[], votes: Vote[]) => {
     return options.map((option: Option) => getVoteCountByOption(option, votes));
 };
 export const getVoteCountByOption = (option: Option, votes: Vote[]): number => {
-    return votes.reduce((acc: number, vote: Vote) => {
-        return vote.optionId === option._id ? acc + 1 : acc;
-    }, 0);
+    return votes.reduce(
+        (acc: number, vote: Vote) => {
+            return vote.optionId === option._id ? acc + 1 : acc;
+        },
+        0
+    );
 };
-export const getSessionById = (sessions: Session[], sessionId: string) : Session =>
+export const getSessionById = (sessions: Session[], sessionId: string): Session =>
     sessions.find((session: Session) => session._id === sessionId);

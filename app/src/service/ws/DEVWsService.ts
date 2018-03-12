@@ -9,12 +9,12 @@ export class DEVWsService implements WsService {
         this.wsBaseUrl = wsBaseUrl;
     }
 
-    connect(): Promise<any> {
+    connect(): Promise<void> {
         this.ioClient = io(this.wsBaseUrl);
         return Promise.resolve();
     }
 
-    emit(message: string, value: string): Promise<any> {
+    emit(message: string, value: string): Promise<void> {
         this.ioClient.emit(message, value);
         return Promise.resolve();
     }
@@ -34,7 +34,6 @@ export class DEVWsService implements WsService {
 
     onCountdown(callback) {
         this.ioClient.on('SESSION_COUNT_DOWN', (response) => {
-            console.log(response);
             callback(response.session);
         });
     }

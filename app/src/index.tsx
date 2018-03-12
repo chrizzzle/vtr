@@ -14,10 +14,11 @@ export interface AppConfig {
 }
 
 const bootstrapper = bootstrapApp({
-    env: 'DEV',
-    apiBaseURL: 'http://192.168.2.147:8000',
-    wsBaseUrl: 'http://192.168.2.147:8000'
-}, window);
+        env: 'DEV',
+        apiBaseURL: 'http://192.168.2.147:8000',
+        wsBaseUrl: 'http://192.168.2.147:8000'
+    },
+    window);
 
 const store = bootstrapper.createStore();
 store.dispatch(initializeApp());

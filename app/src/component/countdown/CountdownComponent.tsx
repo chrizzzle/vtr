@@ -2,20 +2,22 @@ import * as React from 'react';
 import './CountdownComponent.css';
 
 interface CountdownComponentProps {
-    number: number;
+    count: number;
     show: boolean;
 }
 
-export class CountdownComponent extends React.Component<CountdownComponentProps, any> {
+export class CountdownComponent extends React.Component<CountdownComponentProps, {}> {
     render() {
-        const {number, show} = this.props;
+        const {count, show} = this.props;
 
         if (show) {
-            return <div className="countdown">
-                <div className="countdown__value">
-                    {number}
+            return (
+                <div className="countdown">
+                    <div className="countdown__value">
+                        {count}
+                    </div>
                 </div>
-            </div>;
+            );
         }
 
         return <div />;

@@ -11,7 +11,7 @@ export class DEVStorageService implements StorageService {
     }
 
     getVoteCount(sessionId: string) {
-        return parseInt(this.storage.getItem(sessionId)) || 0;
+        return parseInt(this.storage.getItem(sessionId), 10) || 0;
     }
 
     createUserId() {
@@ -32,8 +32,8 @@ export class DEVStorageService implements StorageService {
 
     private generateRandomId() {
         const S4 = function() {
-            return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+            return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
         };
-        return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+        return (S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4());
     }
 }

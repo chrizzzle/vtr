@@ -1,18 +1,17 @@
 import * as React from 'react';
-import {ConnectedContainer} from './container/connected/ConnectedContainer';
 import {LoadingSpinnerComponent} from './component/loadingspinner/LoadingSpinnerComponent';
 
 export interface WrapperProps {
     loading: boolean;
 }
 
-class Wrapper extends React.Component<WrapperProps, any> {
+class Wrapper extends React.Component<WrapperProps, {}> {
     render() {
         if (this.props.loading) {
-            return (<LoadingSpinnerComponent />)
+            return (<LoadingSpinnerComponent />);
         }
-        return (<div className="wrapper">
-                <ConnectedContainer />
+        return (
+            <div className="wrapper">
                 <div className="container">
                     {this.props.children}
                 </div>
