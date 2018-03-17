@@ -11,12 +11,14 @@ interface SessionListComponentProps {
 export class SessionListComponent extends React.Component<SessionListComponentProps, {}> {
     render() {
         const {sessions, onSessionClick} = this.props;
+        const sessionList = sessions.length > 0
+            ? sessions.map((session: Session) =>
+                <SessionComponent key={session._id} session={session} onSessionClick={onSessionClick} />)
+            : <div className="session-list__empty-text">No voting sessions available</div>;
 
         return (
             <div className="session-list">
-                {sessions.map((session: Session) =>
-                    <SessionComponent key={session._id} session={session} onSessionClick={onSessionClick} />
-                )}
+                {sessionList}
             </div>
         );
     }

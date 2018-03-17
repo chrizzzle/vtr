@@ -1,0 +1,12 @@
+@import './variables';
+.wrapper {
+    &__header {
+        padding: 10px 20px 5px;
+        background-color: lighten($baseColor, 6%);
+
+        svg {
+            width: 50px;
+            height: 16.19px;
+        }
+    }
+}

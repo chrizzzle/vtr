@@ -1,38 +1,45 @@
 @import '../../variables';
 
-.session-list .session {
-    display: flex;
-    padding: 20px 10px;
-    color: white;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    background-color: lighten($baseColor, 6%);
-    border: none;
-    width: 100%;
-    cursor: pointer;
-    text-decoration: none;
-    align-items: center;
+.session-list {
+    &__empty-text {
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-    &:hover {
-        background-color: lighten($baseColor, 12%);
+    .session {
+        display: flex;
+        padding: 20px 10px;
+        color: white;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        background-color: lighten($baseColor, 6%);
+        border: none;
+        width: 100%;
+        cursor: pointer;
+        text-decoration: none;
+        align-items: center;
 
-        .session__active {
-            background-color: lighten($baseColor, 18%);
+        &:hover {
+            background-color: lighten($baseColor, 12%);
+
+            .session__active {
+                background-color: lighten($baseColor, 18%);
+            }
+        }
+
+        &__name {
+            flex: 1 1 auto;
+            font-family: "Helvetica Neue LT W06 45 Light", sans-serif;
+        }
+
+        &__active {
+            flex: 0 0 auto;
+            width: 30px;
+            height: 30px;
+            background-color: lighten($baseColor, 12%);
+            border-radius: 50%;
         }
     }
-
-    &__name {
-        flex: 1 1 auto;
-        font-family: "Helvetica Neue LT W06 45 Light", sans-serif;
-    }
-
-    &__active {
-        flex: 0 0 auto;
-        width: 30px;
-        height: 30px;
-        background-color: lighten($baseColor, 12%);
-        border-radius: 50%;
-    }
-
-
 }
