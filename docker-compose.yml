@@ -1,0 +1,28 @@
+version: '3'
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: docker/local/Dockerfile
+    ports:
+      - "8000:3000"
+      - "8080:8080"
+    links:
+      - mongodb
+    volumes:
+      - ./server:/var/www/html
+  mongodb:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    command: mongod --smallfiles
+  client:
+    build:
+      context: ./app
+      dockerfile: docker/local/Dockerfile
+    ports:
+      - "9000:3000"
+    links:
+      - server
+    volumes:
+      - ./app:/var/www/html

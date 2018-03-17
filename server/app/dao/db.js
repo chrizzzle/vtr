@@ -31,8 +31,6 @@ var db = {
                         callback(null);
                     }
             });
-
-
         });
     },
     deleteAll: function (collectionName, callback) {

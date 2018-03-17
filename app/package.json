@@ -28,6 +28,7 @@
     "ws": "^4.0.0"
   },
   "scripts": {
+    "setup": "./shell/setup.sh",
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "start-js": "react-scripts-ts start",
