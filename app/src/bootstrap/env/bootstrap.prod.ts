@@ -10,8 +10,6 @@ import {options} from '../../state/option/option.reducer';
 import {sessions} from '../../state/session/session.reducer';
 import {votes} from '../../state/vote/vote.reducer';
 
-
-
 export const createPRODBootstrap = (appConfig: AppConfig, window: Window) => {
     let factory = new ProdAppFactory(appConfig, window);
     return {

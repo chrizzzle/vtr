@@ -13,7 +13,8 @@ export interface AppConfig {
     wsBaseUrl?: string;
 }
 
-const bootstrapper = bootstrapApp({
+const bootstrapper = bootstrapApp(
+    {
         env: 'DEV',
         apiBaseURL: 'http://192.168.2.147:8000',
         wsBaseUrl: 'http://192.168.2.147:8000'

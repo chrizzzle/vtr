@@ -13,5 +13,7 @@ export const bootstrapApp = (config: AppConfig, window: Window): BootstrapResult
             return createDEVBootstrap(config, window);
         case 'PROD':
             return createPRODBootstrap(config, window);
+        default:
+            console.warn('Unknown env', config.env);
     }
 };

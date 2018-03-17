@@ -1,5 +1,7 @@
 import {WsService} from './WsService';
 import * as io from 'socket.io-client';
+import {Vote} from '../../entity/Vote';
+import {Session} from '../../entity/Session';
 
 export class DEVWsService implements WsService {
     private wsBaseUrl: string;
@@ -19,38 +21,38 @@ export class DEVWsService implements WsService {
         return Promise.resolve();
     }
 
-    onVote(callback) {
+    onVote(callback: (vote: Vote) => void) {
         this.ioClient.on('VOTE', (message) => {
             const vote = JSON.parse(message);
             callback(vote);
         });
     }
 
-    onVoteLimit(callback) {
+    onVoteLimit(callback: () => void) {
         this.ioClient.on('VOTE_LIMIT', () => {
             callback();
         });
     }
 
-    onCountdown(callback) {
+    onCountdown(callback: (session: Session) => void) {
         this.ioClient.on('SESSION_COUNT_DOWN', (response) => {
             callback(response.session);
         });
     }
 
-    onSessionStart(callback) {
+    onSessionStart(callback: (session: Session) => void) {
         this.ioClient.on('SESSION_START', (response) => {
             callback(response.session);
         });
     }
 
-    onSessionEnd(callback) {
+    onSessionEnd(callback: (session: Session) => void) {
         this.ioClient.on('SESSION_END', (response) => {
             callback(response.session);
         });
     }
 
-    onSessionTimer(callback) {
+    onSessionTimer(callback: (session: Session) => void) {
         this.ioClient.on('SESSION_TIMER', (response) => {
             callback(response.session);
         });
