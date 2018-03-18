@@ -1,4 +1,4 @@
-version: '3'
+version: '3.2'
 services:
   server:
     build:
@@ -22,7 +22,13 @@ services:
       dockerfile: docker/local/Dockerfile
     ports:
       - "9000:3000"
-    links:
-      - server
     volumes:
       - ./app:/var/www/html
+  admin:
+    build:
+      context: ./admin
+      dockerfile: docker/local/Dockerfile
+    ports:
+      - "9001:3000"
+    volumes:
+      - ./admin:/var/www/html
