@@ -1,11 +1,15 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import {Provider} from 'react-redux';
 import './index.css';
-import {bootstrapApp} from './bootstrap/index';
-import {initializeApp} from './thunk/initialize-app';
 
-import {AppContainer} from './container/AppContainer';
+import ApolloClient from 'apollo-client';
+import {ApolloProvider} from 'react-apollo';
+import { split } from 'apollo-link';
+import { HttpLink } from 'apollo-link-http';
+import { WebSocketLink } from 'apollo-link-ws';
+import { getMainDefinition } from 'apollo-utilities';
+import {InMemoryCache} from 'apollo-cache-inmemory';
+import AppComponent from './component/AppComponent';
 
 export interface AppConfig {
     env?: 'DEV' | 'PROD';
@@ -13,20 +17,34 @@ export interface AppConfig {
     wsBaseUrl?: string;
 }
 
-const bootstrapper = bootstrapApp(
-    {
-        env: 'DEV',
-        apiBaseURL: 'http://localhost:8000',
-        wsBaseUrl: 'http://localhost:8000'
-    },
-    window);
+const httpLink = new HttpLink({
+    uri: 'http://localhost:8000/graphql'
+});
 
-const store = bootstrapper.createStore();
-store.dispatch(initializeApp());
+const wsLink = new WebSocketLink({
+    uri: `ws://localhost:8001/subscriptions`,
+    options: {
+        reconnect: true
+    }
+});
+
+const link = split(
+    ({ query }) => {
+        let definition = getMainDefinition(query);
+        return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
+    },
+    wsLink,
+    httpLink,
+);
+
+const apolloClient = new ApolloClient({
+    link,
+    cache: new InMemoryCache()
+});
 
 ReactDOM.render(
-    <Provider store={store}>
-        <AppContainer/>
-    </Provider>,
+    <ApolloProvider client={apolloClient}>
+        <AppComponent />
+    </ApolloProvider>,
     document.getElementById('root')
 );

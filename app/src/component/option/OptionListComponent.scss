@@ -1,0 +1,37 @@
+@import '../../variables';
+
+.option-list {
+    &__empty-text {
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__option {
+        display: flex;
+        padding: 20px 10px;
+        color: white;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        background-color: lighten($baseColor, 6%);
+        border: none;
+        width: 100%;
+        cursor: pointer;
+        text-decoration: none;
+        align-items: center;
+
+        &:hover {
+            background-color: lighten($baseColor, 12%);
+
+            .session__active {
+                background-color: lighten($baseColor, 18%);
+            }
+        }
+
+        &-name {
+            flex: 1 1 auto;
+            font-family: "Helvetica Neue LT W06 45 Light", sans-serif;
+        }
+    }
+}

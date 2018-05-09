@@ -1,20 +1,19 @@
-import {connect} from 'react-redux';
 import {AppState} from '../../state/AppState';
 import {SessionListComponent} from '../../component/session/SessionListComponent';
+import gql from 'graphql-tag';
+import { graphql } from 'react-apollo';
 
-export const mapStateToProps = (state: AppState, props) => {
-    return {
-        sessions: state.sessions.data
-    };
-};
+export const mapStateToProps = (state: AppState, props) => ({});
+export const mapDispatchToProps = (dispatch, props) => ({});
 
-export const mapDispatchToProps = (dispatch, props) => {
-    return {
+// We use the gql tag to parse our query string into a query document
+const GET_SESSIONS = gql`
+  query {
+      sessions {
+        _id,
+        name
+      }
+  }
+`;
 
-    };
-};
-
-export const SessionListContainer = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(SessionListComponent);
+export const SessionListContainer = graphql(GET_SESSIONS)(SessionListComponent);

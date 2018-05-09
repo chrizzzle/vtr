@@ -1,28 +1,31 @@
 import * as React from 'react';
-import { Option } from '../../entity/Option';
-import './OptionListComponent.css';
+import {Option} from '../../entity/Option';
+import './OptionListComponent.scss';
 import {OptionComponent} from './OptionComponent';
-import {Vote} from '../../entity/Vote';
-import {getVoteCountByOption} from '../../container/dashboard/DashboardHelper';
 import {Session} from '../../entity/Session';
-import {Link} from 'react-router-dom';
 import {CountdownContainer} from '../../container/countdown/CountdownContainer';
 import {TimerContainer} from '../../container/timer/TimerContainer';
+import './OptionListComponent.css';
+import {Vote} from '../../entity/Vote';
+import {ChildProps, Mutation} from 'react-apollo';
+import {VOTE_OPTION} from '../../container/option/OptionListContainer';
 
 interface OptionListComponentProps {
-    optionList: Option[];
-    votes: Vote[];
-    onOptionClick: (option: Option) => void;
+    options: Option[];
     session: Session;
-    error: string;
-    startSession: (session: Session) => void;
-    active: boolean;
+    votes: Vote[];
+    loading: boolean;
 }
 
-export class OptionListComponent extends React.Component<OptionListComponentProps, {}> {
+export class OptionListComponent extends React.Component<ChildProps<{}, OptionListComponentProps>>  {
+
     render() {
-        const {optionList, votes, session, error, active} = this.props;
-        const activeClass = active ? 'option-list--active' : '';
+        if (this.props.data.loading) {
+            return <div>loading</div>;
+        }
+        const {options, session} = this.props.data;
+        const activeClass = session.active ? 'option-list--active' : '';
+        const error = false;
 
         return (
             <div className={`component option-list ${activeClass}`}>
@@ -32,37 +35,28 @@ export class OptionListComponent extends React.Component<OptionListComponentProp
                 <TimerContainer session={session} />
                 {Boolean(error) && <div className="alert alert-danger" role="alert">{error}</div>}
 
-                { optionList.map(
-                    (option: Option) =>
-                        <OptionComponent
+                { options.map(
+                    (option: Option) => (
+                        <Mutation
+                            mutation={VOTE_OPTION}
+                            variables={{
+                                optionId: option._id,
+                                sessionId: session._id
+                            }}
                             key={option._id}
-                            voteCount={getVoteCountByOption(option, votes)}
-                            option={option}
-                            onOptionClick={this.createOptionClickHandler(option)}
-                        />
+                        >
+
+                            {voteOption => (
+                                <OptionComponent
+                                    option={option}
+                                    onOptionClick={voteOption}
+                                />
+                            )}
+                        </Mutation>
+                        )
                     )
                 }
-
-                <div className="option-list__button-wrapper">
-                    <Link className="option-list__button" to={`/`}>View Sessions</Link>
-                    <Link className="option-list__button" to={`/session/${session._id}/dashboard`}>View Dashboard</Link>
-                </div>
-                <div className="option-list__button" onClick={this.createSessionClickHandler(session)}>
-                    Start Session
-                </div>
             </div>
         );
-    }
-
-    createOptionClickHandler(option: Option) {
-        return () => {
-            this.props.onOptionClick(option);
-        };
-    }
-
-    createSessionClickHandler(session: Session) {
-        return () => {
-            this.props.startSession(session);
-        };
     }
 }

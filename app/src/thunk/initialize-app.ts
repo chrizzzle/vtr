@@ -1,20 +1,15 @@
 import {AppFactory} from '../factory/AppFactory';
 import {connectWs} from './connect-ws';
-import {getSessions} from './get-sessions';
-import {getOptions} from './get-options';
-import {getVotes} from './get-votes';
 import {uiSetLoading} from '../state/ui/ui.actions';
+import {saveUserIdToState} from '../state/user/user.actions';
 
 export const initializeApp = () => {
     return (dispatch, getState, factory: AppFactory) => {
         dispatch(uiSetLoading(true));
-        return Promise.all([
-            factory.getStorage().createUserId(),
-            dispatch(getSessions()),
-            dispatch(getOptions()),
-            dispatch(getVotes()),
-            dispatch(connectWs())
-        ]).then(() => dispatch(uiSetLoading(false)))
-        .catch((e) => dispatch(uiSetLoading(false)));
+        return dispatch(connectWs())
+            .then(() => factory.getStorage().createUserId())
+            .then((userId) => dispatch(saveUserIdToState(userId)))
+            .then(() => dispatch(uiSetLoading(false)))
+            .catch((e) => dispatch(uiSetLoading(false)));
     };
 };

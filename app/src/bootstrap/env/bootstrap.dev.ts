@@ -10,9 +10,11 @@ import {ui} from '../../state/ui/ui.reducer';
 import {options} from '../../state/option/option.reducer';
 import {sessions} from '../../state/session/session.reducer';
 import {votes} from '../../state/vote/vote.reducer';
+import {user} from '../../state/user/user.reducer';
 
 export const createDEVBootstrap = (appConfig: AppConfig, window: Window) => {
     let factory = new DevAppFactory(appConfig, window);
+
     return {
         createStore: () => {
             return createStore(
@@ -21,7 +23,8 @@ export const createDEVBootstrap = (appConfig: AppConfig, window: Window) => {
                     ws,
                     ui,
                     sessions,
-                    votes
+                    votes,
+                    user,
                 }),
                 createInitialAppState(),
                 composeWithDevTools(

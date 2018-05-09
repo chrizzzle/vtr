@@ -9,6 +9,7 @@ import {ui} from '../../state/ui/ui.reducer';
 import {options} from '../../state/option/option.reducer';
 import {sessions} from '../../state/session/session.reducer';
 import {votes} from '../../state/vote/vote.reducer';
+import {user} from '../../state/user/user.reducer';
 
 export const createPRODBootstrap = (appConfig: AppConfig, window: Window) => {
     let factory = new ProdAppFactory(appConfig, window);
@@ -20,7 +21,8 @@ export const createPRODBootstrap = (appConfig: AppConfig, window: Window) => {
                     ws,
                     ui,
                     sessions,
-                    votes
+                    votes,
+                    user
                 }),
                 createInitialAppState(),
                 composeWithDevTools(

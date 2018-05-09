@@ -3,6 +3,7 @@ import {createInitialUiState, UIState} from './UiState';
 import {createInitialOptionState, OptionState} from './OptionState';
 import {createInitialSessionState, SessionState} from './SessionState';
 import {createInitialVoteState, VoteState} from './VoteState';
+import {createInitialUserState, UserState} from './UserState';
 
 export interface AppState {
     options: OptionState;
@@ -10,6 +11,8 @@ export interface AppState {
     ui: UIState;
     sessions: SessionState;
     votes: VoteState;
+    user: UserState;
+    apollo: any;
 }
 
 export const createInitialAppState = (): AppState => {
@@ -18,6 +21,8 @@ export const createInitialAppState = (): AppState => {
         ws: createInitialWsState(),
         ui: createInitialUiState(),
         sessions: createInitialSessionState(),
-        votes: createInitialVoteState()
+        votes: createInitialVoteState(),
+        user: createInitialUserState(),
+        apollo: null
     };
 };

@@ -7,24 +7,20 @@ import Wrapper from '../Wrapper';
 import {SessionListContainer} from '../container/session/SessionListContainer';
 
 interface AppComponentProps {
-    loading: boolean;
-    onSessionCreate: () => void;
 }
 
-class AppComponent extends React.Component<AppComponentProps, {}> {
+class AppComponent extends React.Component<AppComponentProps> {
     render() {
-        const {loading} = this.props;
-
         return (
-            <Wrapper loading={loading}>
-                <Router>
+            <Router>
+                <Wrapper>
                     <div>
                         <Route exact={true} path="/" component={SessionListContainer} />
-                        <Route path="/session/:id/options" component={OptionListContainer} />
+                        <Route path="/session/:id" component={OptionListContainer} />
                         <Route path="/session/:id/dashboard" component={DashboardContainer} />
                     </div>
-                </Router>
-            </Wrapper>
+                </Wrapper>
+            </Router>
         );
     }
 }

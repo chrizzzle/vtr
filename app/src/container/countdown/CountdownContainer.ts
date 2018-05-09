@@ -1,25 +1,22 @@
-import {connect} from 'react-redux';
-import {AppState} from '../../state/AppState';
 import {CountdownComponent} from '../../component/countdown/CountdownComponent';
-import {Session} from '../../entity/Session';
+import gql from 'graphql-tag';
+import {graphql} from 'react-apollo';
 
-export const mapStateToProps = (state: AppState, props) => {
-    const session: Session = props.session;
-    const count: number = session.countdown || 0;
-    const show: boolean = session.countdown > 0;
+const GET_COUNTDOWN = gql`
+  query($sessionId: ID!) {
+      session(_id: $sessionId) {
+        _id,
+        countdown,
+        active,
+        percent
+      }
+  }
+`;
 
-    return {
-        count,
-        show
-    };
-};
-
-export const mapDispatchToProps = (dispatch, props) => {
-    return {
-    };
-};
-
-export const CountdownContainer = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(CountdownComponent);
+export const CountdownContainer = graphql(GET_COUNTDOWN, {
+    options: (ownProps: any) => ({
+        variables: {
+            sessionId: ownProps.session._id
+        }
+    })
+})(CountdownComponent);

@@ -1,26 +1,33 @@
-import {connect} from 'react-redux';
-import {AppState} from '../../state/AppState';
-import {Session} from '../../entity/Session';
 import {TimerComponent} from '../../component/timer/TimerComponent';
-import {getTimeString} from './TimerHelper';
+import {graphql} from 'react-apollo';
+import gql from 'graphql-tag';
 
-export const mapStateToProps = (state: AppState, props) => {
-    const session: Session = props.session;
-    const timerDisplay: string = getTimeString(session.timer || 0);
-    const percent: number = session.percent;
 
-    return {
-        timer: timerDisplay,
+const GET_TIMER = gql`
+  query($sessionId: ID!) {
+      session(_id: $sessionId) {
+        _id,
+        timer,
         percent
-    };
-};
+      }
+  }
+`;
 
-export const mapDispatchToProps = (dispatch, props) => {
-    return {
-    };
-};
+export const TIMER_SUBSCRIPTION = gql`
+  subscription timerChanged($sessionId: ID!) {
+    timerChanged(sessionId: $sessionId) {
+        _id,
+        timer,
+        percent
+    }
+  }
+`;
 
-export const TimerContainer = connect(
-    mapStateToProps,
-    mapDispatchToProps
+export const TimerContainer = graphql(GET_TIMER, {
+    options: (ownProps: any) => ({
+        variables: {
+            sessionId: ownProps.session._id
+        }
+    })
+}
 )(TimerComponent);

@@ -12,7 +12,7 @@ export class SessionComponent extends React.Component<SessionComponentProps, {}>
     render() {
         const {session} = this.props;
         return (
-            <Link className="session" to={`session/${session._id}/options`}>
+            <Link className="session" to={`session/${session._id}`}>
                 <div className="session__name">{session.name}</div>
                 <div className="session__active" />
             </Link>

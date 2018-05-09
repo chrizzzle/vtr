@@ -1,36 +1,61 @@
-import {connect} from 'react-redux';
-import {AppState} from '../../state/AppState';
-import {Option} from '../../entity/Option';
-import {vote} from '../../thunk/vote';
 import {OptionListComponent} from '../../component/option/OptionListComponent';
-import {getOptionsBySession, getSessionById, getVotesBySession} from '../dashboard/DashboardHelper';
-import {startSession} from '../../thunk/start-session';
-import {Session} from '../../entity/Session';
+import gql from 'graphql-tag';
+import {graphql} from 'react-apollo';
 
-export const mapStateToProps = (state: AppState, props) => {
-    const sessionId = props.match.params.id;
-    const session = getSessionById(state.sessions.data, sessionId);
-    const options = getOptionsBySession(state.options.data, session);
-    const votes = getVotesBySession(state.votes.data, session);
-    const active = session.active;
+export const GET_OPTIONS_BY_SESSION = gql`
+  query($sessionId: ID!) {
+      options(sessionId: $sessionId) {
+        _id,
+        name,
+        sessionId
+      },
+      session(_id: $sessionId) {
+        _id,
+        name,
+        timer,
+        countdown,
+        active,
+        percent
+      },
+      votes(sessionId: $sessionId) {
+        _id,
+        sessionId,
+        optionId
+      }
+  }
+`;
 
-    return {
-        optionList: options,
-        votes: votes,
-        session: session,
-        error: state.votes.error,
-        active: active
-    };
-};
+export const VOTE_OPTION = gql`
+    mutation($sessionId: ID!, $optionId: ID!) {
+        createVote(sessionId: $sessionId, optionId: $optionId) {
+            sessionId,
+            optionId
+        }
+    }
+`;
 
-export const mapDispatchToProps = (dispatch, props) => {
-    return {
-        onOptionClick: (option: Option) => dispatch(vote(option)),
-        startSession: (session: Session) => dispatch(startSession(session))
-    };
-};
+export const VOTE_SUBSCRIPTION = gql`
+  subscription ($optionId: ID!) {
+    voteCount(optionId: $optionId) {
+        optionId,
+        voteCount
+    }
+  }
+`;
 
-export const OptionListContainer = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(OptionListComponent);
+export const VOTE_COUNT = gql`
+    query($optionId: ID!) {
+      voteCount(optionId: $optionId) {
+        voteCount
+      }
+  }
+`;
+
+
+export const OptionListContainer = graphql(GET_OPTIONS_BY_SESSION, {
+    options: (ownProps: any) => ({
+        variables: {
+            sessionId: ownProps.match.params.id
+        }
+    })
+}) (OptionListComponent);
