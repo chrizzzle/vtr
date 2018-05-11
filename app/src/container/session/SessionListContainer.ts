@@ -11,7 +11,8 @@ const GET_SESSIONS = gql`
   query {
       sessions {
         _id,
-        name
+        name,
+        active
       }
   }
 `;

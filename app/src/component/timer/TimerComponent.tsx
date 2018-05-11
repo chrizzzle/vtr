@@ -9,7 +9,24 @@ interface TimerComponentProps {
     session: Session;
 }
 
-export class TimerComponent extends React.Component<TimerComponentProps, {}> {
+interface TimerComponentState {
+    timer: Number;
+    percent: Number;
+}
+
+export class TimerComponent extends React.Component<TimerComponentProps, TimerComponentState> {
+    state = {
+        timer: 100,
+        percent: 100
+    };
+
+    componentWillReceiveProps (nextProps: any) {
+        this.setState({
+            timer: nextProps.session.timer,
+            percent: nextProps.session.percent
+        });
+    }
+
     render() {
         const {session} = this.props;
 
@@ -18,19 +35,23 @@ export class TimerComponent extends React.Component<TimerComponentProps, {}> {
                 subscription={TIMER_SUBSCRIPTION}
                 variables={{sessionId: session._id}}
             >
-                {(props) => (
-                    !props.loading && (
+                {(subscriptionProps) => {
+                    return (
+
                         <div className="timer">
                             <div className="timer__value">
-                                <CircularProgressbar percentage={props.data.timerChanged.percent} textForPercentage={null} />
+                                <CircularProgressbar
+                                    percentage={this.state.percent}
+                                    textForPercentage={null}
+                                />
                             </div>
 
                             <div className="timer__time">
-                                {props.data.timerChanged.timer}
+                                {this.state.timer}
                             </div>
                         </div>
-                    )
-                )}
+
+                )}}
             </Subscription>
         );
     }

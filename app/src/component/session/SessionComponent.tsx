@@ -11,8 +11,9 @@ interface SessionComponentProps {
 export class SessionComponent extends React.Component<SessionComponentProps, {}> {
     render() {
         const {session} = this.props;
+        const activeClass = session.active ? 'session--active' : '';
         return (
-            <Link className="session" to={`session/${session._id}`}>
+            <Link className={`session ${activeClass}`} to={`session/${session._id}`}>
                 <div className="session__name">{session.name}</div>
                 <div className="session__active" />
             </Link>

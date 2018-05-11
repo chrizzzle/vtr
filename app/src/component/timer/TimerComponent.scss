@@ -1,0 +1,37 @@
+.CircularProgressbar {
+    max-width: 35%;
+    position: relative;
+}
+
+.CircularProgressbar-path {
+    stroke: white;
+}
+
+.CircularProgressbar-trail {
+    stroke: rgba(255,255,255,0.6);
+}
+
+.CircularProgressbar-text {
+    fill: white;
+    transform: translate(-50px, -50px);
+}
+
+.timer__value {
+    text-align: center;
+
+}
+
+.timer {
+    position: relative;
+}
+
+.timer__time {
+    position: absolute;
+    width: 100%;
+    top: 48%;
+    transform: translate(0, -50%);
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+
+}

@@ -77,6 +77,7 @@ const typeDefs = `
     createSession(name: String!): Session
     createOption(name: String!, sessionId: ID!): Option
     createVote(sessionId: ID!, optionId: ID!): Vote
+    startSession(sessionId: ID!): Session
   }
   
   type Subscription {
@@ -94,7 +95,6 @@ const resolvers = {
             subscribe: withFilter(
                 () => pubsub.asyncIterator('voteCount'),
                 (payload, variables) => {
-                    console.log(payload.voteCount.optionId, variables.optionId);
                     return payload.voteCount.optionId === variables.optionId;
 
                 }
@@ -112,7 +112,7 @@ const resolvers = {
             subscribe: withFilter(
                 () => pubsub.asyncIterator('timerChanged'),
                 (payload, variables) => {
-                    return payload.sessionId === variables.sessionId;
+                    return payload.timerChanged._id.toString() === variables.sessionId;
                 }
             )
         }
@@ -209,30 +209,68 @@ const resolvers = {
                 });
             });
         },
+        startSession: (root, args, context, info) => {
+            return Promise.resolve()
+                .then(() => {
+                    return sessionModel.findOne({
+                        _id: args.sessionId
+                    }, null);
+                })
+                .then((session) => {
+                    session.active = true;
+                    return session.save();
+                })
+                .then((session) => {
+                    let counter = 100;
+                    const interval = setInterval(() => {
+                        counter--;
+                        session.timer = parseInt(counter);
+                        session.percent = parseInt(Math.round((counter / 100) * 100));
+                        session.save(session).then((sessionData) => {
+                            pubsub.publish('timerChanged', {
+                                timerChanged: sessionData
+                            });
+                        });
+
+                        if (counter <= 0) {
+                            clearInterval(interval);
+                            session.active = false;
+                            session.save();
+                        }
+                    }, 1000);
+                });
+        },
         createVote: (root, args, context, info) => {
-            return Promise.resolve().then(() => {
-                const vote = new voteModel(args);
-                vote._id = mongoose.Types.ObjectId();
-                return vote.save();
-            }).then((vote) => {
-                return voteModel.count({
-                    optionId: args.optionId,
-                    sessionId: args.sessionId
-                });
-            }).then((voteCount) => {
-                console.log({
-                    voteCount: {
-                        optionId: args.optionId,
-                        voteCount
+            return Promise.resolve()
+                .then(() => {
+                    return sessionModel.findOne({
+                        _id: args.sessionId
+                    });
+                })
+                .then((session) => {
+                    if (!session.active) {
+                        throw new Error('Session not active');
                     }
-                });
-                pubsub.publish('voteCount', {
-                    voteCount: {
+                })
+                .then(() => {
+                    const vote = new voteModel(args);
+                    vote._id = mongoose.Types.ObjectId();
+                    return vote.save();
+                }).then((vote) => {
+                    return voteModel.count({
                         optionId: args.optionId,
-                        voteCount
-                    }
+                        sessionId: args.sessionId
+                    });
+                }).then((voteCount) => {
+                    pubsub.publish('voteCount', {
+                        voteCount: {
+                            optionId: args.optionId,
+                            voteCount
+                        }
+                    });
+                }).catch((e) => {
+                    console.info('Error while creating vote', e.message);
                 });
-            });
         }
     }
 };

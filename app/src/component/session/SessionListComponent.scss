@@ -41,5 +41,17 @@
             background-color: lighten($baseColor, 12%);
             border-radius: 50%;
         }
+
+        &--active {
+            .session__active {
+                animation: pulsate 1s ease-out infinite;
+            }
+        }
+
+        @-webkit-keyframes pulsate {
+            0%   { background-color: lighten($baseColor, 18%); }
+            50%  { background-color: lighten($baseColor, 100%); }
+            100% { background-color: lighten($baseColor, 18%); }
+        }
     }
 }

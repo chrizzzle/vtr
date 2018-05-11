@@ -33,6 +33,7 @@ export class OptionListComponent extends React.Component<ChildProps<{}, OptionLi
                 <h2>{session.name}</h2>
 
                 <TimerContainer session={session} />
+
                 {Boolean(error) && <div className="alert alert-danger" role="alert">{error}</div>}
 
                 { options.map(
