@@ -21,6 +21,6 @@ export class SessionComponent extends React.Component<SessionComponentProps, {}>
     }
 
     createSessionClickHandler(session: Session) {
-        return  () => this.props.onSessionClick(session);
+        return () => this.props.onSessionClick(session);
     }
 }

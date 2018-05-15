@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Session} from '../../entity/Session';
 import {SessionComponent} from './SessionComponent';
 import './SessionListComponent.css';
-import { ChildProps } from 'react-apollo/types';
+import {ChildProps} from 'react-apollo/types';
 
 interface SessionListComponentProps {
     onSessionClick: (session: Session) => void;
@@ -17,7 +17,7 @@ export class SessionListComponent extends React.Component<ChildProps<{}, Session
         }
         const {sessions} = this.props.data;
         const {onSessionClick} = this.props.data;
-        const sessionList = sessions.length > 0
+        const sessionList = sessions && sessions.length > 0
             ? sessions.map((session: Session) =>
                 <SessionComponent key={session._id} session={session} onSessionClick={onSessionClick} />)
             : <div className="session-list__empty-text">No voting sessions available</div>;

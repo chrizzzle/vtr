@@ -19,14 +19,14 @@ const sessionModel = mongoose.model('Session', {
 const optionModel = mongoose.model('Option', {
     _id:  mongoose.Schema.Types.ObjectId,
     name: String,
-    sessionId: String,
-    voteCount: Number
+    sessionId: String
 });
 
 const voteModel = mongoose.model('Vote', {
     _id: mongoose.Schema.Types.ObjectId,
     optionId: String,
-    sessionId: String
+    sessionId: String,
+    userId: String
 });
 
 const userModel = mongoose.model('User', {
@@ -56,12 +56,19 @@ const typeDefs = `
   type Vote {
     _id: ID!,
     sessionId: ID!,
-    optionId: ID!
+    optionId: ID!,
+    userId: ID!
   }
   
   type VoteCount {
+    sessionId: ID!,
     optionId: ID!,
+    userId: ID!,
     voteCount: Int
+  }
+  
+  type User {
+    _id: ID!
   }
   
   type Query {
@@ -69,23 +76,56 @@ const typeDefs = `
     sessions: [Session]
     options(sessionId: ID!): [Option]
     votes(sessionId: ID!): [Vote]
-    voteCount(optionId: ID!): VoteCount
+    voteCount(sessionId: ID!, userId: ID!): [VoteCount]
+    user: User
   }
   
   type Mutation {
     deleteSession(_id: ID!): Boolean
     createSession(name: String!): Session
     createOption(name: String!, sessionId: ID!): Option
-    createVote(sessionId: ID!, optionId: ID!): Vote
+    createVote(sessionId: ID!, optionId: ID!, userId: ID!): Vote
     startSession(sessionId: ID!): Session
+    createUser: User
   }
   
   type Subscription {
-    voteCount(optionId: ID!): VoteCount
+    voteCount(sessionId: ID!, userId: ID!): [VoteCount]
     timerChanged(sessionId: ID!): Session
     sessionStarted(sessionId: ID!): Session
   }
 `;
+
+const createVoteCount = (sessionId, userId) => {
+    return Promise.resolve().then(() => {
+        return voteModel.find({
+            sessionId,
+            userId
+        });
+    }).then((votes) => {
+        const votesByOptions = votes.reduce((acc, vote) => {
+            if (!acc[vote.optionId]) {
+                acc[vote.optionId] = [];
+            }
+            acc[vote.optionId].push(vote);
+            return acc;
+        }, {});
+
+        let result = [];
+        for (let optionId in votesByOptions) {
+            if (votesByOptions.hasOwnProperty(optionId)) {
+                let voteCount = votesByOptions[optionId].length;
+                result.push({
+                    optionId,
+                    sessionId,
+                    voteCount
+                });
+            }
+        }
+        return result;
+    });
+};
+
 
 
 // Provide resolver functions for your schema fields
@@ -95,8 +135,8 @@ const resolvers = {
             subscribe: withFilter(
                 () => pubsub.asyncIterator('voteCount'),
                 (payload, variables) => {
-                    return payload.voteCount.optionId === variables.optionId;
-
+                    console.log('payload', payload);
+                    return payload;
                 }
             )
         },
@@ -104,7 +144,8 @@ const resolvers = {
             subscribe: withFilter(
                 () => pubsub.asyncIterator('sessionStarted'),
                 (payload, variables) => {
-                    return payload.sessionId === variables.sessionId;
+                    return payload &&
+                        (payload.sessionId === variables.sessionId);
                 }
             )
         },
@@ -112,7 +153,8 @@ const resolvers = {
             subscribe: withFilter(
                 () => pubsub.asyncIterator('timerChanged'),
                 (payload, variables) => {
-                    return payload.timerChanged._id.toString() === variables.sessionId;
+                    return payload &&
+                        (payload.timerChanged._id.toString() === variables.sessionId);
                 }
             )
         }
@@ -157,18 +199,8 @@ const resolvers = {
             });
         },
         voteCount: (root, args, context) => {
-            const optionId = args.optionId;
-            return Promise.resolve().then(() => {
-                return voteModel.count({
-                    optionId: optionId
-                });
-            }).then((voteCount) => {
-                return {
-                    optionId: args.optionId,
-                    voteCount
-                };
-            });
-
+            const {sessionId, userId} = args;
+            return createVoteCount(sessionId, userId);
         }
     },
     Mutation: {
@@ -209,6 +241,14 @@ const resolvers = {
                 });
             });
         },
+        createUser: (root, args, context, info) => {
+            const user = new userModel();
+            user._id = mongoose.Types.ObjectId();
+            return Promise.resolve().then(() => {
+                return user.save();
+            });
+
+        },
         startSession: (root, args, context, info) => {
             return Promise.resolve()
                 .then(() => {
@@ -241,10 +281,11 @@ const resolvers = {
                 });
         },
         createVote: (root, args, context, info) => {
+            const {sessionId, optionId, userId} = args;
             return Promise.resolve()
                 .then(() => {
                     return sessionModel.findOne({
-                        _id: args.sessionId
+                        _id: sessionId
                     });
                 })
                 .then((session) => {
@@ -255,21 +296,16 @@ const resolvers = {
                 .then(() => {
                     const vote = new voteModel(args);
                     vote._id = mongoose.Types.ObjectId();
+
                     return vote.save();
                 }).then((vote) => {
-                    return voteModel.count({
-                        optionId: args.optionId,
-                        sessionId: args.sessionId
-                    });
+                    return createVoteCount(sessionId, userId);
                 }).then((voteCount) => {
                     pubsub.publish('voteCount', {
-                        voteCount: {
-                            optionId: args.optionId,
-                            voteCount
-                        }
+                        voteCount
                     });
                 }).catch((e) => {
-                    console.info('Error while creating vote', e.message);
+                    console.warn('Error while creating vote', e.message);
                 });
         }
     }

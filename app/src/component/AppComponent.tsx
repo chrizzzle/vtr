@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {DashboardContainer} from '../container/dashboard/DashboardContainer';
 import './AppComponent.css';
 import {OptionListContainer} from '../container/option/OptionListContainer';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
@@ -17,7 +16,6 @@ class AppComponent extends React.Component<AppComponentProps> {
                     <div>
                         <Route exact={true} path="/" component={SessionListContainer} />
                         <Route path="/session/:id" component={OptionListContainer} />
-                        <Route path="/session/:id/dashboard" component={DashboardContainer} />
                     </div>
                 </Wrapper>
             </Router>
